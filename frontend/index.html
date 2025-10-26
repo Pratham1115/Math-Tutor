@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MathTutor AI</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <header>
+        <h1>📘 MathTutor AI</h1>
+        <nav>
+            <button id="dashboardBtn">Dashboard</button>
+        </nav>
+    </header>
+
+    <!-- Search & Upload Section -->
+    <section class="search-section">
+        <input type="text" id="searchBar" placeholder="Search for a math topic...">
+        <button id="searchBtn">Search</button>
+        <input type="file" id="uploadFile" accept=".pdf">
+    </section>
+
+    <!-- Display Section -->
+    <section class="content" id="contentArea">
+        <h2>Welcome to MathTutor AI!</h2>
+        <p>Search a topic or upload your question bank to get started.</p>
+    </section>
+    
+    <!-- Dashboard Section -->
+    <section class="dashboard" id="dashboard" style="display:none;">
+      <h2>📊 Your Progress Dashboard</h2>
+      <p><strong>Total Questions Attempted:</strong> <span id="totalQ">0</span></p>
+      <p><strong>Correct Answers:</strong> <span id="correctQ">0</span></p>
+      <p><strong>Accuracy:</strong> <span id="accuracy">0%</span></p>
+      <p><strong>Weak Topics:</strong> <span id="weakTopics">None</span></p>
+      <canvas id="progressChart" width="400" height="200"></canvas>
+    </section>
+
+
+    <script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</body>
+</html>
+
+
