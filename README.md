@@ -1,59 +1,84 @@
-# 🧮 MathTutor AI — Intelligent Learning Assistant
+# MathMentor AI
 
-MathTutor AI is a smart, interactive web app that helps users **learn math topics step-by-step** using **AI + Machine Learning**.  
-It explains concepts in simple terms, gives practice questions, tracks performance, and adjusts question difficulty based on response time and accuracy.  
-Users can also **import question banks or PDFs**, **search topics**, and **view their progress dashboard**.
+## Project Overview
 
----
+Traditional math learning tools provide static content that does not adapt to individual student performance. MathMentor AI addresses this challenge by creating a **personalized, adaptive, and reflective learning experience**.  
 
-## 🚀 Features
-
-### 🎓 Learning & Teaching
-- Search for any math topic using the built-in search bar.  
-- AI explains the topic in **easy, beginner-friendly language** with examples.  
-- Generates **practice questions** related to the topic.
-
-### 📊 Smart Progress Tracking
-- Tracks user performance:
-  - Total questions attempted  
-  - Correct answers  
-  - Accuracy percentage  
-  - Weak topics
-- Displays progress visually using **Chart.js** doughnut charts.
-
-### 🧠 Adaptive Learning
-- Uses **response time**, **accuracy**, and **hints used** to adjust difficulty level dynamically.  
-- Provides personalized feedback and suggestions.
-
-### 📂 Question Bank Import
-- Allows importing **custom question banks** or **PDFs**.  
-- The system reads and organizes them into topic-wise sections for easier learning.
-
-### 🖥️ Clean & Responsive Front-End
-- Built using **HTML, CSS, and JavaScript**.  
-- Dashboard view for user stats.  
-- Topic view for explanations, examples, and practice questions.
+Our AI system monitors student performance, analyzes response patterns, and adjusts difficulty in real-time while providing personalized hints and feedback.  
 
 ---
 
-## 🏗️ Project Structure
-MathTutorAI/
-│
-├── index.html # Main UI (search, topic display, dashboard)
-├── style.css # Styling for layout, dashboard, and charts
-├── script.js # Handles UI logic, events, and chart updates
-└── README.md # This file
+## System Architecture
+
+MathMentor AI implements a **continuous feedback loop** between student performance and content delivery:
+
+1. **Student Input:**  
+   - Students submit answers and interact with the system.  
+   - Interaction data is recorded, including hints requested.  
+
+2. **Performance Tracking:**  
+   - Response time and accuracy are monitored for each question.  
+
+3. **ML Analysis:**  
+   - A machine learning model predicts the optimal difficulty level for the next question.  
+   - The system identifies concept gaps based on response patterns and accuracy.  
+
+4. **Smart Feedback:**  
+   - Personalized hints and guidance are provided depending on student performance.  
+
+5. **Progress Display:**  
+   - Students receive visual insights into their learning progress and improvement areas.  
+
+**Workflow Diagram (Conceptual):**  
+Student Input --> Performance Tracking --> ML Analysis --> Adaptive Content Delivery
 
 
 ---
 
-## how it works
-User searches topic → Frontend sends query to backend
-        ↓
-   Backend uses AI to explain & generate example
-        ↓
-   Frontend displays explanation + questions
-        ↓
-   User answers → Time & accuracy tracked
-        ↓
-   Dashboard updates → AI adjusts next question difficulty
+## Technology Stack
+
+**Backend & AI:**  
+- **Machine Learning:** Python, scikit-learn / TensorFlow / PyTorch  
+- **Natural Language Processing:** LangChain, OllamaLLM  
+- **ML Models:** Decision Tree, Logistic Regression for difficulty prediction  
+
+**Frontend (Optional for GUI):**  
+- Web: React / Django  
+- Mobile: Flutter  
+
+**Cloud & Deployment:**  
+- AWS / Google Cloud / Azure for storage, analytics, and model deployment  
+
+**Resources Required:**  
+- Dataset of math problems and solutions  
+- Computing resources for ML model training  
+- Collaboration among developers, data scientists, and educators  
+
+---
+
+## ML Analysis Workflow
+
+1. **Data Collection:**  
+   - Inputs: response time, accuracy percentage, hints requested, current difficulty, and interaction patterns  
+
+2. **ML Processing:**  
+   - Models (Decision Tree / Logistic Regression) predict:  
+     - Optimal student challenge level  
+     - Concept gaps requiring attention  
+
+3. **Adaptive Output:**  
+   - Next question difficulty is calibrated to the student's learning zone  
+   - Personalized hints and guidance are generated based on ML analysis  
+
+---
+
+## Key Features
+
+- Adaptive difficulty adjustment in real-time  
+- Personalized feedback and hints based on performance  
+- Continuous tracking of student learning metrics  
+- Visual progress insights for better self-awareness  
+- Supports both web and mobile interfaces  
+
+---
+
