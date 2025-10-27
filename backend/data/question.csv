@@ -1,6 +1,11 @@
-id,question,answer,difficulty,explanation
-1,5x - 10 = 0,2,1,Divide both sides by 5 → x = 2
-2,7x = 21,3,1,Divide both sides by 7 → x = 3
-3,2x + 4 = 10,3,1,Subtract 4 and divide by 2 → x = 3
-4,9x = 81,9,2,Divide both sides by 9 → x = 9
-5,4x + 8 = 0,-2,2,Subtract 8 and divide by 4 → x = -2
+id,question,answer,difficulty,explanation,topic
+1,5x - 10 = 0,2,1,Add 10 then divide by 5 → x=2,algebra
+2,8x = 32,4,1,Divide both sides by 8 → x=4,algebra
+3,6 + 3 = ?,9,1,Add 6 + 3 → 9,arithmetic
+4,12 ÷ 4 = ?,3,1,Divide 12 by 4 → 3,arithmetic
+5,Area of square (side=4),16,2,side × side → 4×4=16,geometry
+6,Perimeter of rectangle (l=5,b=3),16,2,2×(l+b)=2×(5+3)=16,geometry
+7,2x + 6 = 10,2,2,Subtract 6 then divide by 2 → x=2,algebra
+8,7x = 21,3,2,Divide both sides by 7 → x=3,algebra
+9,Square root of 49,7,1,√49 = 7,arithmetic
+10,10x - 40 = 0,4,2,Add 40 then divide by 10 → x=4,algebra

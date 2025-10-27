@@ -14,13 +14,19 @@ async function getQuestion() {
   document.getElementById("result").innerText = "";
   document.getElementById("explanation").style.display = "none";
 
-  const res = await fetch("http://127.0.0.1:5000/get_question");
+  const topic = document.getElementById("topic").value;
+  const url = topic
+    ? `http://127.0.0.1:5000/get_question?topic=${topic}`
+    : "http://127.0.0.1:5000/get_question";
+
+  const res = await fetch(url);
   const data = await res.json();
 
   currentQuestion = data;
   document.getElementById("question").innerText = data.question;
   document.getElementById("answer").value = "";
 }
+
 
 async function submitAnswer() {
   const answer = document.getElementById("answer").value.trim();

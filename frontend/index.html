@@ -6,7 +6,7 @@
   <title>📘 MathMentor AI</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: "Segoe UI", Arial, sans-serif;
       background: #f2f6fc;
       color: #222;
       text-align: center;
@@ -17,8 +17,8 @@
       padding: 30px;
       margin: 20px auto;
       border-radius: 12px;
-      max-width: 400px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      max-width: 420px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     }
     h1 { color: #007bff; }
     input {
@@ -49,6 +49,7 @@
     }
   </style>
 </head>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <body>
 
   <div class="card">
@@ -67,6 +68,17 @@
 
     <p id="result"></p>
     <div id="explanation"></div>
+    <canvas id="progressChart" width="400" height="200" style="margin-top:20px;"></canvas>
+
+    <hr>
+    <h3>📤 Upload or Download Questions</h3>
+    <input type="file" id="fileInput" />
+    <button onclick="uploadCSV()">Upload CSV</button>
+
+    <br><br>
+    <input type="text" id="downloadURL" placeholder="Paste CSV URL here" style="width:80%;">
+    <button onclick="downloadCSV()">Download from URL</button>
+    <p id="status"></p>
   </div>
 
   <script>
@@ -86,7 +98,7 @@
 
     async function submitAnswer() {
       const answer = document.getElementById("answer").value.trim();
-
+      
       if (!answer) {
         alert("Please enter an answer!");
         return;
@@ -111,9 +123,71 @@
       document.getElementById("score").innerText = data.score;
       document.getElementById("accuracy").innerText = data.accuracy + "%";
       document.getElementById("difficulty").innerText = data.next_difficulty;
+      updateChart(data.accuracy);
+    }
+
+    async function uploadCSV() {
+      const fileInput = document.getElementById("fileInput");
+      if (!fileInput.files.length) return alert("Please select a CSV file!");
+
+      const formData = new FormData();
+      formData.append("file", fileInput.files[0]);
+
+      const res = await fetch("http://127.0.0.1:5000/upload_csv", {
+        method: "POST",
+        body: formData,
+      });
+
+      const data = await res.json();
+      document.getElementById("status").innerText = data.message;
+    }
+
+    async function downloadCSV() {
+      const url = document.getElementById("downloadURL").value.trim();
+      if (!url) return alert("Please enter a CSV URL!");
+
+      const res = await fetch("http://127.0.0.1:5000/download_questions", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ url }),
+      });
+
+      const data = await res.json();
+      document.getElementById("status").innerText = data.message;
     }
 
     window.onload = getQuestion;
+    // ====================== 📈 Progress Chart ======================
+let progressData = [];
+const ctx = document.getElementById('progressChart').getContext('2d');
+
+const progressChart = new Chart(ctx, {
+  type: 'line',
+  data: {
+    labels: [],
+    datasets: [{
+      label: 'Accuracy (%)',
+      data: [],
+      borderWidth: 2,
+      borderColor: '#007bff',
+      fill: false,
+      tension: 0.2
+    }]
+  },
+  options: {
+    scales: {
+      y: { beginAtZero: true, max: 100 }
+    }
+  }
+});
+
+function updateChart(accuracy) {
+  progressData.push(accuracy);
+  progressChart.data.labels.push(progressData.length);
+  progressChart.data.datasets[0].data.push(accuracy);
+  progressChart.update();
+}
+
   </script>
 
 </body>
