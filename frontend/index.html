@@ -1,47 +1,120 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MathTutor AI</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>📘 MathMentor AI</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f2f6fc;
+      color: #222;
+      text-align: center;
+      padding: 40px;
+    }
+    .card {
+      background: white;
+      padding: 30px;
+      margin: 20px auto;
+      border-radius: 12px;
+      max-width: 400px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    h1 { color: #007bff; }
+    input {
+      padding: 10px;
+      font-size: 16px;
+      margin-top: 10px;
+      width: 80%;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+    button {
+      margin-top: 15px;
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 6px;
+      background-color: #007bff;
+      color: white;
+      cursor: pointer;
+    }
+    button:hover { background-color: #0056b3; }
+    #explanation {
+      background: #e8f5e9;
+      border-radius: 8px;
+      padding: 10px;
+      margin-top: 15px;
+      display: none;
+    }
+  </style>
 </head>
 <body>
-    <!-- Navigation Bar -->
-    <header>
-        <h1>📘 MathTutor AI</h1>
-        <nav>
-            <button id="dashboardBtn">Dashboard</button>
-        </nav>
-    </header>
 
-    <!-- Search & Upload Section -->
-    <section class="search-section">
-        <input type="text" id="searchBar" placeholder="Search for a math topic...">
-        <button id="searchBtn">Search</button>
-        <input type="file" id="uploadFile" accept=".pdf">
-    </section>
+  <div class="card">
+    <h1>📘 MathMentor AI</h1>
 
-    <!-- Display Section -->
-    <section class="content" id="contentArea">
-        <h2>Welcome to MathTutor AI!</h2>
-        <p>Search a topic or upload your question bank to get started.</p>
-    </section>
-    
-    <!-- Dashboard Section -->
-    <section class="dashboard" id="dashboard" style="display:none;">
-      <h2>📊 Your Progress Dashboard</h2>
-      <p><strong>Total Questions Attempted:</strong> <span id="totalQ">0</span></p>
-      <p><strong>Correct Answers:</strong> <span id="correctQ">0</span></p>
-      <p><strong>Accuracy:</strong> <span id="accuracy">0%</span></p>
-      <p><strong>Weak Topics:</strong> <span id="weakTopics">None</span></p>
-      <canvas id="progressChart" width="400" height="200"></canvas>
-    </section>
+    <p>📈 Score: <span id="score">0</span></p>
+    <p>🎯 Accuracy: <span id="accuracy">0%</span></p>
+    <p>⚙️ Difficulty: <span id="difficulty">1</span></p>
 
+    <h3 id="question">Loading question...</h3>
 
-    <script src="script.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <input type="text" id="answer" placeholder="Enter your answer">
+    <br>
+    <button onclick="submitAnswer()">Submit</button>
+    <button onclick="getQuestion()">Next Question</button>
+
+    <p id="result"></p>
+    <div id="explanation"></div>
+  </div>
+
+  <script>
+    let currentQuestion = {};
+
+    async function getQuestion() {
+      document.getElementById("result").innerText = "";
+      document.getElementById("explanation").style.display = "none";
+
+      const res = await fetch("http://127.0.0.1:5000/get_question");
+      const data = await res.json();
+
+      currentQuestion = data;
+      document.getElementById("question").innerText = data.question;
+      document.getElementById("answer").value = "";
+    }
+
+    async function submitAnswer() {
+      const answer = document.getElementById("answer").value.trim();
+
+      if (!answer) {
+        alert("Please enter an answer!");
+        return;
+      }
+
+      const res = await fetch("http://127.0.0.1:5000/submit_answer", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          student_answer: answer,
+          correct_answer: currentQuestion.answer,
+          id: currentQuestion.id
+        }),
+      });
+
+      const data = await res.json();
+
+      document.getElementById("result").innerText = data.result;
+      document.getElementById("explanation").style.display = "block";
+      document.getElementById("explanation").innerText = "💡 " + data.explanation;
+
+      document.getElementById("score").innerText = data.score;
+      document.getElementById("accuracy").innerText = data.accuracy + "%";
+      document.getElementById("difficulty").innerText = data.next_difficulty;
+    }
+
+    window.onload = getQuestion;
+  </script>
+
 </body>
 </html>
-
-

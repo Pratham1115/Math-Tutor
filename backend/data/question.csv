@@ -1,0 +1,6 @@
+id,question,answer,difficulty,explanation
+1,5x - 10 = 0,2,1,Divide both sides by 5 → x = 2
+2,7x = 21,3,1,Divide both sides by 7 → x = 3
+3,2x + 4 = 10,3,1,Subtract 4 and divide by 2 → x = 3
+4,9x = 81,9,2,Divide both sides by 9 → x = 9
+5,4x + 8 = 0,-2,2,Subtract 8 and divide by 4 → x = -2
